@@ -1,16 +1,29 @@
 {
-  "name": "backend",
+  "name": "youtube_be",
   "version": "1.0.0",
-  "description": "",
+  "description": "backend for your tube clone project",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "index.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Richard Marshall, Rob Magana, Xeng Xiong",
+  "license": "MIT",
   "dependencies": {
     "config": "^3.3.3",
+    "express": "^4.17.1",
     "mongoose": "^5.11.10"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isben22/YouTubeClone.git"
+  },
+  "keywords": [
+    "youtube",
+    "clone"
+  ],
+  "bugs": {
+    "url": "https://github.com/isben22/YouTubeClone/issues"
+  },
+  "homepage": "https://github.com/isben22/YouTubeClone#readme"
 }
