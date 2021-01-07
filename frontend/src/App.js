@@ -7,22 +7,25 @@ import VideoDetail from './Components/VideoDetail/videoDetail';
 
 class App extends React.Component {
   constructor (props) {
-    super (props) {
-      this.handleSubmit = this.handleSubmit.bind(this),
-      this.handleChange = this.handleChange.bind(this)
-    }
+    super (props) 
+      this.handleSubmit = this.handleSubmit.bind(this);
+      this.handleChange = this.handleChange.bind(this);
+      // bind selectedvideo
+    
   }
   state = {
-    videos: [],
-    selectedVideo: null,
+    videos: [], //need a function to pass in each video into videoitem
+    selectedVideo: null, //need a function that sets this passed into videoitem
     videoSearch: "",
   
   }
 
   getYoutube () {
     axios.get ("https://www.googleapis.com/youtube/v3").then(response => {
-      this.setState({videoSearch: response.data})
-    })
+      console.log(response.data);  
+    this.setState({videoSearch: response.data});
+      
+    });
   };
   
   handleChange = (event) => {
@@ -30,10 +33,10 @@ class App extends React.Component {
     this.setState({
         videoSearch: event.target.value
     });
-}
+  }
   handleSubmit = (event) => {
     event.preventDefault();
-}
+  }
 
   // handleSubmit = async (termFromSearchBar) => {
   //   const response = await youtube.get('/search', {
@@ -52,7 +55,8 @@ class App extends React.Component {
   render () {
     return (
       <div className='ui container' style={{marginTop: '1em'}}>
-        <SearchBar handleSubmit={this.handleSubmit} handleChange={this.handleChange}/>
+        <SearchBar handleSubmit={this.handleSubmit} handleChange={this.handleChange}
+        videoSearch = {this.state.videoSearch}/>
         <div className='ui grid'>
           <div className='ui row'>
             <div className='eleven wide column'>
@@ -67,4 +71,6 @@ class App extends React.Component {
     )
   }
 }
+
+
 export default App;
