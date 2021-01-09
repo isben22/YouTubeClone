@@ -1,9 +1,11 @@
 import React from 'react';
 import axios from 'axios';
-import SearchBar from './Components/SearchBar/searchBar';
+import SearchField from 'react-search-field';
+// import SearchBar from './Components/SearchBar/searchBar';
 //import youtube from '';
 import VideoList from './Components/VideoList/videoList';
 import VideoDetail from './Components/VideoDetail/videoDetail';
+
 
 class App extends React.Component {
   constructor (props) {
@@ -20,13 +22,16 @@ class App extends React.Component {
   
   }
 
-  getYoutube () {
-    axios.get ("https://www.googleapis.com/youtube/v3").then(response => {
-      console.log(response.data);  
+
+  getYoutube() {
+    axios.get ("https://www.googleapis.com/youtube/v3/search?q=car&key=AIzaSyDqJUbsYQtd9qQMfBfpF3ZA5LDqCya1hng&type=video")
+    .then(response => {
     this.setState({videoSearch: response.data});
-      
+      console.log(this.state.videoSearch);
+      console.log(this.state.videos);
     });
-  };
+  }
+
   
   handleChange = (event) => {
     event.preventDefault();
@@ -38,6 +43,8 @@ class App extends React.Component {
     event.preventDefault();
   }
 
+
+  
   // handleSubmit = async (termFromSearchBar) => {
   //   const response = await youtube.get('/search', {
   //     params: {
@@ -55,7 +62,9 @@ class App extends React.Component {
   render () {
     return (
       <div className='ui container' style={{marginTop: '1em'}}>
-        <SearchBar handleSubmit={this.handleSubmit} handleChange={this.handleChange}
+        {/* <SearchBar handleSubmit={this.handleSubmit} handleChange={this.handleChange}
+        videoSearch = {this.state.videoSearch} /> */}
+        <SearchField  onEnter={onEnter} handleSubmit={this.handleSubmit} handleChange={this.handleChange}
         videoSearch = {this.state.videoSearch}/>
         <div className='ui grid'>
           <div className='ui row'>

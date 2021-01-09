@@ -2,6 +2,8 @@ import React from 'react';
 
 function Searchbar (props) {
 
+    
+
 
         return (
             <div className='search-bar ui segment'>
