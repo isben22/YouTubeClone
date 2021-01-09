@@ -27,13 +27,13 @@ router.get('/video/:videoId', async (req, res) => {
     }
 });
 //Post a new comment
-router.post('/', async (req,res) => {
+router.post('/new', async (req,res) => {
     try {
         const{error}=validate(req.body);
         if (error)
             return res.status(400).send(error);
 
-        const comment = new Comment({
+        const comment = new Comment ({
             videoId: req.body.videoId,
             text: req.body.text,
             postDate: req.body.postDate,
@@ -46,9 +46,8 @@ router.post('/', async (req,res) => {
         return res.status(500).send(`InternalServerError:${ex}`);
     }
 });
-
 //Post reply
-router.post('/reply/:videoId', async (req,res) => {
+router.post('/reply/:id', async (req,res) => {
     try {
         console.log(req.params.videoId);
         const{error}=validate(req.body);
@@ -59,7 +58,6 @@ router.post('/reply/:videoId', async (req,res) => {
             videoId: req.body.videoId,
             text: req.body.text,
             postDate: req.body.postDate,
-           
         });
 
         await comment.save();
@@ -69,5 +67,44 @@ router.post('/reply/:videoId', async (req,res) => {
         return res.status(500).send(`InternalServerError:${ex}`);
     }
 });
+//Update a comment
+router.put('/:id', async (req, res) => {
+    try{
+        const{ error } = validateComments(req.body);
+        if(error) return res.status(400).send(error);
+
+        const comment = await comments.findByIdAndUpdate(
+            req.params.id,
+            {
+                videoId: req.body.videoId,
+                text: req.body.text,
+            },
+            {new: true}
+        );
+        if (!comment)
+            return res.status(400).send(`The comment with id "${req.params.id}" does not exist.`);
+
+            await comment.save();
+
+            return res.send(comment);
+          } catch(ex) {
+              return res.status(500).send(`Internal Server Error: ${ex}`);
+          }
+});
+
+router.delete('/:videoId', async (req, res) => {
+    try{
+
+        const comment = await Comment.deleteOne({videoId:req.params.videoId});
+
+        if (!comment)
+            return res.status(400).send(`The comment with id "${req.params.videoId}" does not exist.`);
+
+        return res.send(comment);
+    } catch(ex){
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+});
+
 
 module.exports = router;

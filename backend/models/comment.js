@@ -27,7 +27,7 @@ function validateComment(comment) {
         likes: Joi.number(),
         dislikes: Joi.number(),
         text: Joi.string().min(5).max(255).required(),
-        postDate: Joi.Date(),
+        postDate: Joi.date(),
     });
     return schema.validate(comment);
 }
